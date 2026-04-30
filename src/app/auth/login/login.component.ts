@@ -9,5 +9,7 @@ import { FormsModule, NgForm } from '@angular/forms';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  onSubmit(form: NgForm) { }
+  onSubmit(form: NgForm) {
+    console.log(form);
+  }
 }
