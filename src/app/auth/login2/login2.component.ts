@@ -1,9 +1,14 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import {
+    FormControl,
+    FormGroup,
+    ReactiveFormsModule
+} from '@angular/forms';
 
 @Component({
     selector: 'app-login2',
     standalone: true,
+    imports: [ReactiveFormsModule],
     templateUrl: './login2.component.html',
     styleUrl: './login2.component.css',
 })
