@@ -14,7 +14,9 @@ import {
 })
 export class Login2Component {
     richardsForm = new FormGroup({
-        email: new FormControl(''),
+        email: new FormControl('', {
+            validators: []
+        }),
         password: new FormControl('')
     });
 
