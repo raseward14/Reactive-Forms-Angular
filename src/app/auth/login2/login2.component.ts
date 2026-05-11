@@ -19,6 +19,9 @@ export class Login2Component {
     });
 
     onSubmit() {
-        this.richardsForm.value.email;
+        console.log(this.richardsForm.value.email);
+        const enteredEmail = this.richardsForm.value.email;
+        const enteredPassword = this.richardsForm.value.password;
+        console.log(enteredEmail, enteredPassword);
     }
 }
