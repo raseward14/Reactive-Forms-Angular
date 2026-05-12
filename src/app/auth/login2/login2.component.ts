@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import {
     FormControl,
     FormGroup,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    Validators
 } from '@angular/forms';
 
 @Component({
@@ -15,10 +16,23 @@ import {
 export class Login2Component {
     richardsForm = new FormGroup({
         email: new FormControl('', {
-            validators: []
+            validators: [Validators.email, Validators.required]
         }),
-        password: new FormControl('')
+        password: new FormControl('', {
+            validators: [Validators.required, Validators.minLength(6)]
+        })
     });
+
+    get emailIsInvalid() {
+        return this.richardsForm.controls.email.touched &&
+            this.richardsForm.controls.email.dirty &&
+            this.richardsForm.controls.email.invalid
+    }
+    get passwordIsInvalid() {
+        return this.richardsForm.controls.password.touched &&
+            this.richardsForm.controls.password.dirty &&
+            this.richardsForm.controls.password.invalid
+    }
 
     onSubmit() {
         console.log(this.richardsForm.value.email);
