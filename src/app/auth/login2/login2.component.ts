@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import {
     AbstractControl,
     FormControl,
@@ -6,7 +6,7 @@ import {
     ReactiveFormsModule,
     Validators
 } from '@angular/forms';
-import { of } from 'rxjs';
+import { debounceTime, of } from 'rxjs';
 
 function mustContainQuestionMark(control: AbstractControl) {
     if (control.value.includes('?')) {
@@ -23,6 +23,14 @@ function emailIsUnique(control: AbstractControl) {
     return of({ notUnique: true })
 }
 
+let initialEmailValue = '';
+const savedForm = window.localStorage.getItem('saved-login-form');
+
+if (savedForm) {
+    const savedObject = JSON.parse(savedForm);
+    initialEmailValue = savedObject.email;
+}
+
 @Component({
     selector: 'app-login2',
     standalone: true,
@@ -30,9 +38,9 @@ function emailIsUnique(control: AbstractControl) {
     templateUrl: './login2.component.html',
     styleUrl: './login2.component.css',
 })
-export class Login2Component {
+export class Login2Component implements OnInit {
     richardsForm = new FormGroup({
-        email: new FormControl('', {
+        email: new FormControl(initialEmailValue, {
             validators: [Validators.email, Validators.required],
             asyncValidators: [emailIsUnique]
         }),
@@ -40,6 +48,7 @@ export class Login2Component {
             validators: [Validators.required, Validators.minLength(6), mustContainQuestionMark]
         }),
     });
+    private destroyRef = inject(DestroyRef);
 
     get emailIsInvalid() {
         return this.richardsForm.controls.email.touched &&
@@ -50,6 +59,35 @@ export class Login2Component {
         return this.richardsForm.controls.password.touched &&
             this.richardsForm.controls.password.dirty &&
             this.richardsForm.controls.password.invalid
+    }
+
+    ngOnInit() {
+        // const savedForm = window.localStorage.getItem('saved-login-form');
+
+        // if (savedForm) {
+        // const savedObject = JSON.parse(savedForm);
+        // this.richardsForm.patchValue({
+        //     email: savedObject.email
+        // })
+
+        // this.richardsForm.controls.email.setValue(savedObject.email);
+
+        // this.richardsForm.setValue({
+        //     email: savedObject.email,
+        //     password: ''
+        // })
+        // }
+
+        const subscription = this.richardsForm.valueChanges.pipe(debounceTime(500)).subscribe({
+            next: value => {
+                window.localStorage.setItem('saved-login-form', JSON.stringify({ email: value.email }))
+            }
+        });
+
+        this.destroyRef.onDestroy(() => {
+            subscription.unsubscribe()
+        })
+
     }
 
     onSubmit() {
