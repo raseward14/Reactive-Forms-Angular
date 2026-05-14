@@ -3,7 +3,8 @@ import {
   ɵInternalFormsSharedModule,
   ReactiveFormsModule,
   FormGroup,
-  FormControl
+  FormControl,
+  Validators
 } from '@angular/forms';
 
 @Component({
@@ -15,9 +16,20 @@ import {
 })
 export class SignupComponent {
   signupForm = new FormGroup({
-    email: new FormControl(''),
-    password: new FormControl('')
+    email: new FormControl('', {
+      validators: [Validators.required, Validators.email]
+    }),
+    password: new FormControl('', {
+      validators: [Validators.required, Validators.minLength(6)]
+    })
   })
+
+  resetForm() {
+    this.signupForm.setValue({
+      email: '',
+      password: ''
+    })
+  }
 
   onSubmit() {
     console.log(this.signupForm.controls)
