@@ -22,15 +22,21 @@ export class SignupComponent {
     password: new FormControl('', {
       validators: [Validators.required, Validators.minLength(6)]
     }),
+    confirmPassword: new FormControl('', {
+      validators: [Validators.required, Validators.minLength(6)]
+    }),
+    firstName: new FormControl('', { validators: [Validators.required] }),
+    lastName: new FormControl('', { validators: [Validators.required] }),
+    street: new FormControl('', { validators: [Validators.required] }),
+    number: new FormControl('', { validators: [Validators.required] }),
+    postalCode: new FormControl('', { validators: [Validators.required] }),
+    city: new FormControl('', { validators: [Validators.required] }),
+    role: new FormControl('')
   });
 
-  onReset() {
-    this.signupForm.reset();
-    // this.signupForm.setValue({
-    //   email: '',
-    //   password: ''
-    // });
-  };
+  // onReset() {
+  //   this.signupForm.reset();
+  // };
 
   onSubmit() {
     console.log(this.signupForm);
