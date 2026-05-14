@@ -21,17 +21,18 @@ export class SignupComponent {
     }),
     password: new FormControl('', {
       validators: [Validators.required, Validators.minLength(6)]
-    })
-  })
+    }),
+  });
 
-  resetForm() {
-    this.signupForm.setValue({
-      email: '',
-      password: ''
-    })
-  }
+  onReset() {
+    this.signupForm.reset();
+    // this.signupForm.setValue({
+    //   email: '',
+    //   password: ''
+    // });
+  };
 
   onSubmit() {
-    console.log(this.signupForm.controls)
-  }
+    console.log(this.signupForm);
+  };
 }
