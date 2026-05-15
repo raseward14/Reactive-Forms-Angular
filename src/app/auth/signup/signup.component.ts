@@ -34,7 +34,8 @@ export class SignupComponent {
     number: new FormControl('', { validators: [Validators.required] }),
     postalCode: new FormControl('', { validators: [Validators.required] }),
     city: new FormControl('', { validators: [Validators.required] }),
-    role: new FormControl<role>('student', { validators: [] })
+    role: new FormControl<role>('student', { validators: [Validators.required] }),
+    agree: new FormControl(false, { validators: [Validators.required] })
   });
 
   // onReset() {
