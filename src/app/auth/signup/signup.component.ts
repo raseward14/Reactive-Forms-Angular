@@ -7,6 +7,9 @@ import {
   Validators
 } from '@angular/forms';
 
+type role = 'student' | 'teacher' | 'employee' | 'founder' | 'other';
+
+
 @Component({
   selector: 'app-signup',
   standalone: true,
@@ -31,7 +34,7 @@ export class SignupComponent {
     number: new FormControl('', { validators: [Validators.required] }),
     postalCode: new FormControl('', { validators: [Validators.required] }),
     city: new FormControl('', { validators: [Validators.required] }),
-    role: new FormControl('')
+    role: new FormControl<role>('student', { validators: [] })
   });
 
   // onReset() {
