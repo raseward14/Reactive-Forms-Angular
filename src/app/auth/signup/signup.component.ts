@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import {
-  ɵInternalFormsSharedModule,
   ReactiveFormsModule,
   FormGroup,
   FormControl,
+  FormArray,
   Validators
 } from '@angular/forms';
 
@@ -15,7 +15,7 @@ type role = 'student' | 'teacher' | 'employee' | 'founder' | 'other';
   standalone: true,
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css',
-  imports: [ɵInternalFormsSharedModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
 })
 export class SignupComponent {
   signupForm = new FormGroup({
@@ -39,6 +39,11 @@ export class SignupComponent {
       city: new FormControl('', { validators: [Validators.required] }),
     }),
     role: new FormControl<role>('student', { validators: [Validators.required] }),
+    source: new FormArray([
+      new FormControl(false),
+      new FormControl(false),
+      new FormControl(false)
+    ]),
     agree: new FormControl(false, { validators: [Validators.required] })
   });
 
