@@ -51,7 +51,17 @@ export class SignupComponent {
   //   this.signupForm.reset();
   // };
 
+  get invalidForm() {
+    return this.signupForm.invalid &&
+      this.signupForm.touched;
+  }
+
   onSubmit() {
+    if (this.signupForm.invalid) {
+      console.log('INVALID FORM');
+      return;
+    }
+
     console.log(this.signupForm);
   };
 }
